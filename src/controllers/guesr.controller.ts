@@ -3,18 +3,25 @@ import { Ipservice } from '../services/guest.service';
 import { BaseController } from './base.controller';
 import { NextFunction, Request, Response } from 'express';
 import mongoose, { model } from 'mongoose';
-import { exec } from 'child_process';
+import axios from 'axios';
 import http from 'http';
 export class GuestIp extends BaseController<Ips> {
   _serviceObj: Ipservice = new Ipservice();
   async getIp(req: Request, res: Response, next: NextFunction) {
-    let ip: any;
+    let ip = req.socket.remoteAddress;
     try {
-      exec('curl ip-adresim.app', function (error: any, stdout: any, stderr: any) {
-        if (error) return;
-        console.log('your ip is :' + stdout);
-        ip = stdout;
-      });
+      const axios = require('axios');
+      axios
+        .get(
+          'https://ipgeolocation.abstractapi.com/v1/?api_key=11b08fed93e64fda8fd05a6837faac57'
+        )
+        .then((response: any) => {
+          console.log(response.data.ip_address);
+          ip = response.data.ip_address;
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
       new Promise(async (res, rej) => {
         await model('ips')
           .create({
