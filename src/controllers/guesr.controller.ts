@@ -8,28 +8,26 @@ import http from 'http';
 export class GuestIp extends BaseController<Ips> {
   _serviceObj: Ipservice = new Ipservice();
   async getIp(req: Request, res: Response, next: NextFunction) {
-    let ip = req.socket.remoteAddress;
+    let ip = await axios
+      .get(
+        'https://ipgeolocation.abstractapi.com/v1/?api_key=11b08fed93e64fda8fd05a6837faac57'
+      )
+      .then((response: any) => {
+        console.log(response.data.ip_address, 'ip');
+        return response.data.ip_address;
+      })
+      .catch((error: any) => {
+        console.log(error);
+        return 'nowhere';
+      });
     try {
-      const axios = require('axios');
-      axios
-        .get(
-          'https://ipgeolocation.abstractapi.com/v1/?api_key=11b08fed93e64fda8fd05a6837faac57'
-        )
-        .then((response: any) => {
-          console.log(response.data.ip_address, 'ip');
-          ip = response;
-        })
-        .catch((error: any) => {
-          console.log(error);
-        });
       new Promise(async (res, rej) => {
         await model('ips')
           .create({
-            ip: ip?.toString()
+            ip: ip.toString()
           })
           .then(
             (doc) => {
-              console.log(req.socket.remoteAddress);
               res(doc);
             },
             (err) => {
