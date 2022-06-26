@@ -8,25 +8,29 @@ import axios from 'axios';
 export class GuestIp extends BaseController<Ips> {
   _serviceObj: Ipservice = new Ipservice();
   async getIp(req: Request, res: Response, next: NextFunction) {
-    let ip = await axios
-      .get(
-        'https://ipgeolocation.abstractapi.com/v1/?api_key=11b08fed93e64fda8fd05a6837faac57'
-      )
-      .then((response: any) => {
-        console.log(
-          response.data.latitude,
-          'lat',
-          response.data.longitude,
-          'lang',
-          'ip'
-        );
+    let ip =
+      process.env.NODE_ENV == 'production'
+        ? req.headers['x-forwarded-for']
+        : await axios
+            .get(
+              'https://ipgeolocation.abstractapi.com/v1/?api_key=11b08fed93e64fda8fd05a6837faac57'
+            )
+            .then((response: any) => {
+              console.log(requestIp.getClientIp(req));
+              console.log(
+                response.data.latitude,
+                'lat',
+                response.data.longitude,
+                'lang',
+                'ip'
+              );
 
-        return response.data.ip_address;
-      })
-      .catch((error: any) => {
-        console.log(error);
-        return 'nowhere';
-      });
+              return response.data.ip_address;
+            })
+            .catch((error: any) => {
+              console.log(error);
+              return 'nowhere';
+            });
     try {
       new Promise(async (res, rej) => {
         await model('ips')
