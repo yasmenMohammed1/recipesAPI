@@ -16,6 +16,7 @@ export class UserRouter implements ICustomRouter {
       .route('/users')
       .get(_userControllerObj.getAll)
       .post(new UserValidator().post, new RegisterController().post);
+    userRouter.route('/').get(_userControllerObj.getAll);
     userRouter
       .route('/users/:_id')
       .put(new UserValidator().post, _userControllerObj.put)
