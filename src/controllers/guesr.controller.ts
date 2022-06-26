@@ -17,7 +17,7 @@ export class GuestIp extends BaseController<Ips> {
         )
         .then((response: any) => {
           console.log(response.data.ip_address, 'ip');
-          ip = response.data;
+          ip = response;
         })
         .catch((error: any) => {
           console.log(error);
