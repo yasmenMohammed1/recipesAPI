@@ -16,8 +16,8 @@ export class GuestIp extends BaseController<Ips> {
           'https://ipgeolocation.abstractapi.com/v1/?api_key=11b08fed93e64fda8fd05a6837faac57'
         )
         .then((response: any) => {
-          console.log(response.data.ip_address);
-          ip = response.data.ip_address;
+          console.log(response.data.ip_address, 'ip');
+          ip = response.data;
         })
         .catch((error: any) => {
           console.log(error);
@@ -25,7 +25,7 @@ export class GuestIp extends BaseController<Ips> {
       new Promise(async (res, rej) => {
         await model('ips')
           .create({
-            ip: ip
+            ip: ip?.toString()
           })
           .then(
             (doc) => {
