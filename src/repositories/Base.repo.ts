@@ -10,8 +10,11 @@ export abstract class BaseRebo<schema> {
         .populate(this._populate)
         .exec((err, docs) => {
           if (err) rej(err);
+          else {
+            res(docs);
 
-          res(docs);
+            console.log(this._collectionName);
+          }
         });
     });
   }

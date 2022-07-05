@@ -1,14 +1,13 @@
-import { string } from 'joi';
 import mongoose from 'mongoose';
 const schema = new mongoose.Schema({
-  categories: { type: mongoose.Types.ObjectId, ref: 'categories', required: true },
   title: { type: String, required: true },
   ingrediants: [{ name: String, quantity: String }],
   recipe: String,
   image: String,
-  users: { type: mongoose.Types.ObjectId, ref: 'users' }
+  users: { type: mongoose.Types.ObjectId, ref: 'User' },
+  categories: { type: mongoose.Types.ObjectId, ref: 'Category', required: true }
 });
-export const RecipesModel = mongoose.model('recipes', schema);
+export const RecipesModel = mongoose.model('Recipe', schema);
 export interface Recipe {
   _id: mongoose.Types.ObjectId;
   title: string;
@@ -16,5 +15,4 @@ export interface Recipe {
   ingrediants: string;
   recipe: string;
   image: string;
-  userId: mongoose.Types.ObjectId;
 }

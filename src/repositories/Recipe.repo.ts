@@ -2,7 +2,7 @@ import { Recipe, RecipesModel } from '../models/Recipes.model';
 import { BaseRebo } from './Base.repo';
 
 export class RecipesRepo extends BaseRebo<Recipe> {
-  _collectionName: string = 'recipes';
+  _collectionName: string = 'Recipe';
   _model: Object = RecipesModel;
-  _populate: string = 'users';
+  _populate: string = 'users categories';
 }
