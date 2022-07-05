@@ -9,7 +9,7 @@ export class RecipeRouter implements ICustomRouter {
     recipeRouter
       .route('/recipe')
       .get(_recipeControllerObj.getAll)
-      .post(new RecipeValidtor().post, _recipeControllerObj.post);
+      .post(new RecipeValidtor().post, _recipeControllerObj.addRecipe);
     recipeRouter
       .route('/recipe/:_id')
       .put(_recipeControllerObj.put)

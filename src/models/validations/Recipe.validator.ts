@@ -7,7 +7,7 @@ export class RecipeValidtor {
       categories: Joi.string().required(),
       ingrediants: Joi.object({ name: Joi.string(), quantity: Joi.string() }),
       recipe: Joi.string(),
-      users: Joi.string().required(),
+      user: Joi.string().required(),
       image: Joi.string().required()
     });
     try {

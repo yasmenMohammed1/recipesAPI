@@ -7,10 +7,13 @@ export class RecipeController extends BaseController<Recipe> {
   _serviceObj = new RecipeService();
 
   async addRecipe(req: Request, res: Response, next: NextFunction) {
-    const recipe = req.body.recipe;
+    const recipe = req.body;
+    const _id = req.body.user;
     try {
-      const newRecipe = new RecipeService().createOne(recipe);
-      return newRecipe;
+      console.log(_id, 'user');
+
+      const newRecipe = await new RecipeService().addRecipe(recipe, _id);
+      res.status(200).json(newRecipe);
     } catch (err) {
       next(err);
     }

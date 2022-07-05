@@ -16,19 +16,9 @@ export class GuestIp extends BaseController<Ips> {
               'https://ipgeolocation.abstractapi.com/v1/?api_key=11b08fed93e64fda8fd05a6837faac57'
             )
             .then((response: any) => {
-              console.log(requestIp.getClientIp(req));
-              console.log(
-                response.data.latitude,
-                'lat',
-                response.data.longitude,
-                'lang',
-                'ip'
-              );
-
               return response.data.ip_address;
             })
             .catch((error: any) => {
-              console.log(error);
               return 'nowhere';
             });
     try {
@@ -42,8 +32,6 @@ export class GuestIp extends BaseController<Ips> {
               res(doc);
             },
             (err) => {
-              console.log(ip);
-
               rej(err);
             }
           );

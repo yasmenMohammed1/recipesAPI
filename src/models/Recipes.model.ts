@@ -4,7 +4,7 @@ const schema = new mongoose.Schema({
   ingrediants: [{ name: String, quantity: String }],
   recipe: String,
   image: String,
-  users: { type: mongoose.Types.ObjectId, ref: 'User' },
+  user: { type: mongoose.Types.ObjectId, ref: 'User' },
   categories: { type: mongoose.Types.ObjectId, ref: 'Category', required: true }
 });
 export const RecipesModel = mongoose.model('Recipe', schema);

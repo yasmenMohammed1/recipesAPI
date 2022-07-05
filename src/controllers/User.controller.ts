@@ -34,7 +34,7 @@ export class UserController extends BaseController<User> {
     const data = req.body;
     try {
       const newRecipe = await this._serviceObj.editRecipe(_id, data, recipe);
-      console.log(newRecipe);
+      console.log('nrew recipe', newRecipe);
       response.status(200).json(newRecipe);
     } catch (err) {
       next(err);

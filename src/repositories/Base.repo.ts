@@ -13,7 +13,7 @@ export abstract class BaseRebo<schema> {
           else {
             res(docs);
 
-            console.log(this._collectionName);
+            console.log("'nrew recipe',", this._collectionName);
           }
         });
     });
@@ -46,7 +46,7 @@ export abstract class BaseRebo<schema> {
         .create(data)
         .then(
           (doc) => {
-            console.log(data);
+            console.log('creation', data);
             res(doc);
           },
           (err) => {
