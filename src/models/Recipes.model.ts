@@ -11,7 +11,6 @@ export const RecipesModel = mongoose.model('Recipe', schema);
 export interface Recipe {
   _id: mongoose.Types.ObjectId;
   title: string;
-  // ingrediants: { name: string; quantity: string }[];
   ingrediants: string;
   recipe: string;
   image: string;

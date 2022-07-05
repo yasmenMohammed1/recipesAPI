@@ -8,11 +8,14 @@ export class RecipeController extends BaseController<Recipe> {
 
   async addRecipe(req: Request, res: Response, next: NextFunction) {
     const recipe = req.body;
-    const _id = req.body.user;
+    const categoryID = req.body.categories;
+    const userID = req.body.user;
     try {
-      console.log(_id, 'user');
-
-      const newRecipe = await new RecipeService().addRecipe(recipe, _id);
+      const newRecipe = await new RecipeService().addRecipe(
+        recipe,
+        categoryID,
+        userID
+      );
       res.status(200).json(newRecipe);
     } catch (err) {
       next(err);

@@ -13,6 +13,5 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  recipes: Array<mongoose.Types.ObjectId>;
   password: string;
 }

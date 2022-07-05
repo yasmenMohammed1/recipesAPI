@@ -33,7 +33,7 @@ export abstract class BaseRebo<schema> {
     return new Promise(async (res, rej) => {
       await model(this._collectionName)
         .findById({ _id, image: 1 })
-        .populate(this._populate)
+        .populate({ path: this._populate })
         .exec((err, docs) => {
           if (err) rej(err);
           res(docs);
@@ -46,7 +46,6 @@ export abstract class BaseRebo<schema> {
         .create(data)
         .then(
           (doc) => {
-            console.log('creation', data);
             res(doc);
           },
           (err) => {
@@ -57,21 +56,48 @@ export abstract class BaseRebo<schema> {
         );
     });
   }
-  updateOne(_id: mongoose.Types.ObjectId, recipeId: any, data: {}) {
+  updateOne(
+    _id: mongoose.Types.ObjectId,
+
+    data: {},
+    modelName = this._collectionName
+  ) {
     return new Promise(async (res, rej) => {
       const user: any = await model('users').findById(_id);
-      if (user?.recipes?.includes(recipeId)) {
-        model(this._collectionName)
-          .findByIdAndUpdate(recipeId, data)
+      if (user) {
+        model(modelName)
+          .findByIdAndUpdate(_id, data)
           .exec((err, doc) => {
             if (err) rej(err);
             console.log(doc);
-            console.log(recipeId);
 
             res(data);
           });
       } else {
-        throw new Error('something is wrong' + user.recipes + `recipe:` + recipeId);
+        throw new Error('something is wrong' + user.recipes + `recipe:`);
+      }
+    });
+  }
+  addRecipe(
+    data: any,
+    userID: mongoose.Types.ObjectId,
+    categoryID: mongoose.Types.ObjectId
+  ) {
+    return new Promise(async (res, rej) => {
+      const user: any = await model('User').findById(userID);
+      const category: any = await model('Category').findById(categoryID);
+      if (user && category) {
+        model('Category')
+          .updateOne(categoryID, { $push: { recipes: data } })
+
+          .exec((err, doc) => {
+            if (err) rej(err);
+            console.log(doc);
+
+            res(data);
+          });
+      } else {
+        throw new Error('something is wrong' + user.recipes + `recipe:`);
       }
     });
   }

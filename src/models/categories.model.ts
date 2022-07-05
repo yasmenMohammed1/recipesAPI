@@ -4,7 +4,7 @@ import { Recipe } from './Recipes.model';
 const schema = new mongoose.Schema({
   name: { type: String, required: true },
   image: { type: String, required: true },
-  recipes: [{ type: String, ref: 'Recipe' }]
+  recipes: [{ type: mongoose.Types.ObjectId, ref: 'Recipe' }]
 });
 export const CategoryModel = mongoose.model('Category', schema);
 export interface Categories {
